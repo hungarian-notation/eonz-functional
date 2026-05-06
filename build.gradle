@@ -1,0 +1,15 @@
+
+tasks.register('alljavadoc', Javadoc) {
+	options.tags("apiNote:a:API Note:")
+	options.tags("implNote:a:Implementation Note:")
+	options.tags("implSpec:a:Implementation Requirements:")
+	options.addBooleanOption("-syntax-highlight",true)
+    
+    def javaSubprojects = subprojects.findAll { it.plugins.hasPlugin('java') }
+    source javaSubprojects.collect { it.sourceSets.main.allJava }
+    classpath = files(javaSubprojects.collect { it.sourceSets.main.compileClasspath })
+    destinationDir = file("${buildDir}/docs/javadoc")
+    options.memberLevel = JavadocMemberLevel.PUBLIC
+    options.windowTitle = "eonz-functional"
+
+}
