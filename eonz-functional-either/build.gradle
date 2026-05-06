@@ -1,0 +1,63 @@
+plugins {
+	id("java-library")
+	id("jacoco")
+	id("com.diffplug.spotless") version "8.4.0"
+}
+
+spotless {
+	java {
+		googleJavaFormat() 
+		trimTrailingWhitespace()
+		endWithNewline()
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	testImplementation(libs.junit.jupiter)
+	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+}
+
+version = '0.1.1'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(26)
+	}
+
+    withJavadocJar()
+    withSourcesJar()
+}
+
+tasks.named("test") {
+	useJUnitPlatform()
+
+    testLogging {
+        events "passed", "skipped", "failed"
+        minGranularity = 3
+        maxGranularity = 3
+	}
+
+	finalizedBy tasks.jacocoTestReport
+}
+
+tasks.withType(Javadoc).configureEach {
+	options.tags("apiNote:a:API Note:")
+	options.tags("implNote:a:Implementation Note:")
+	options.tags("implSpec:a:Implementation Requirements:")
+    options.addBooleanOption('Werror', true)
+	options.addBooleanOption("-syntax-highlight",true)
+}
+
+tasks.jacocoTestReport {
+	dependsOn tasks.test
+	reports {
+		xml.required = true
+		xml.outputLocation  = layout.buildDirectory.file("reports/jacoco.xml")
+		csv.required = false
+		html.outputLocation = layout.buildDirectory.dir("jacocoHtml")
+	}
+}
