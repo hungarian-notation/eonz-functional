@@ -15,7 +15,7 @@ dependencies {
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(26)
+        languageVersion = JavaLanguageVersion.of(21)
     }
     
     withJavadocJar()
@@ -45,7 +45,7 @@ tasks.withType(Javadoc).configureEach {
 	options.tags("apiNote:a:API Note:")
 	options.tags("implNote:a:Implementation Note:")
 	options.tags("implSpec:a:Implementation Requirements:")
-	options.addBooleanOption("-syntax-highlight",true)
+	// options.addBooleanOption("-syntax-highlight",true)
     options.addBooleanOption('Werror', true)
 }
 

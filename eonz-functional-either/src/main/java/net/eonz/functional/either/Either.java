@@ -349,7 +349,7 @@ public abstract sealed class Either<L, R> permits Left, Right {
    * @return the result of mapping the described value into an instance of type {@code V}
    */
   public <V> V bifold(Supplier<? extends V> foldLeft, Function<? super R, ? extends V> foldRight) {
-    return bifold((_) -> foldLeft.get(), foldRight);
+    return bifold((_left) -> foldLeft.get(), foldRight);
   }
 
   /**
@@ -362,7 +362,7 @@ public abstract sealed class Either<L, R> permits Left, Right {
    * @return the result of mapping the described value into an instance of type {@code V}
    */
   public <V> V bifold(Function<? super L, ? extends V> foldLeft, Supplier<? extends V> foldRight) {
-    return bifold(foldLeft, (_) -> foldRight.get());
+    return bifold(foldLeft, (_right) -> foldRight.get());
   }
 
   /**
