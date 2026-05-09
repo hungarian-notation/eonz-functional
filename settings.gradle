@@ -3,4 +3,4 @@ plugins {
 }
 
 rootProject.name = "eonz-functional"
-include("eonz-functional-either")
+include("eonz-functional-either","eonz-functional-lattice")
